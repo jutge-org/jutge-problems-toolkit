@@ -1,0 +1,272 @@
+\usepackage{html}
+
+\usepackage{mathpazo}
+\usepackage{helvet}
+\usepackage{courier}
+
+\usepackage{mdwlist}
+\usepackage{shortvrb}
+\usepackage{picins}
+\usepackage{pstricks}
+\usepackage{pst-tree}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{moreverb}
+\usepackage{multicol}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage{chessboard}
+\usepackage{tikz}
+\usepackage{wasysym}
+\usepackage{eurosym}
+
+
+\geometry{
+    a4paper,twoside,
+    left=2.75cm,right=2.75cm,
+    top=3cm,bottom=3cm,
+    marginparwidth=3cm,
+}
+
+\setlength{\parindent}{0cm}
+\pagestyle{empty}
+
+\MakeShortVerb\|
+
+\newenvironment{NoShortVerb}{\DeleteShortVerb\|}{\MakeShortVerb\|}
+
+\newcommand{\mysection}[1]{\subsection*{#1}}
+
+
+\newcommand{\Problem}[1]{
+    \def\PbmTitle{#1}
+}
+
+\newcommand{\Number}[1]{
+    \def\PbmNumber{#1}
+}
+
+\newcommand{\Statement}{
+    \section*{\PbmTitle \hfill (vanilla draft)}
+}
+
+\newcommand{\Input}{
+    \mysection{\TxtInput}
+}
+
+\newcommand{\Output}{
+    \mysection{\TxtOutput}
+}
+
+\newcommand{\Sample}{
+    \SampleTwoCol
+}
+
+\newcommand{\SampleInput}[2]{
+    \mysection{\TxtSampleInput\ #2}
+    {\footnotesize\verbatimtabinput{#1.inp}}
+}
+
+\newcommand{\SampleOutput}[3][]{
+    \mysection{\TxtSampleOutput\ #3}
+    \ifthenelse{\equal{#1}{}}{
+        \footnotesize\verbatimtabinput{#2.cor}
+    }{
+        \includegraphics[width=7cm]{#2.cor.eps}
+        \\{\footnotesize #1}
+    }
+}
+
+\newcommand{\SampleTwoColInputOutput}[3][]{
+    \setlength{\columnseprule}{0.5pt}
+    \begin{multicols}{2}\raggedcolumns
+        \SampleInput{#2}{#3}%\vfill
+        \columnbreak
+        \SampleOutput[#1]{#2}{#3}%\vfill
+    \end{multicols}
+}
+
+\newcommand{\SampleOneColInputOutput}[3][]{
+    \SampleInput{#2}{#3}
+    \SampleOutput[#1]{#2}{#3}
+}
+
+
+
+\newcommand{\SampleSession}{
+    \mysection{\TxtSampleSession}
+    {\footnotesize\verbatimtabinput{sample.dt}}
+}
+
+
+\newcommand{\Precondition}{
+    \mysection{\TxtPrecondition}
+}
+
+\newcommand{\Samples}{
+    \mysection{\TxtSamples}
+}
+
+\newcommand{\Observation}{
+    \mysection{\TxtObservation}
+}
+
+\newcommand{\Observations}{
+    \mysection{\TxtObservations}
+}
+
+\newcommand{\Hint}{
+    \mysection{\TxtHint}
+}
+
+\newcommand{\Scoring}{
+    \mysection{\TxtScores}
+}
+
+\newcommand{\Score}[3]{
+    \begin{itemize}
+
+    \setlength{\fboxrule}{0.05pt}
+    \item \textbf{#1:} \hfill \fbox{\textbf{~#2 \TxtPoints~}}
+
+    #3
+    \end{itemize}
+}
+
+\newcommand{\ShortScore}[3]{
+    \begin{itemize}
+    \setlength{\fboxrule}{0.05pt}
+    \item \textbf{#1:} ~ #3 \hfill \fbox{\textbf{~#2 \TxtPoints~}}
+    \end{itemize}
+}
+
+
+
+\newcommand{\Specification}{
+    \mysection{\TxtSpecification}
+}
+
+\newcommand{\Interface}{
+    \mysection{\TxtInterface}
+}
+
+\newcommand{\ObservationElastic}{
+    \TxtObservationElastic
+}
+
+\newcommand{\ObservationElasticII}{
+    \TxtObservationElasticII
+}
+
+\newcommand{\ObservationNoMain}{
+    \Observation
+    \TxtObservationNoMain
+}
+
+\newcommand{\ObservationNoMainPlural}{
+    \Observation
+    \TxtObservationNoMainPlural
+}
+
+\newcommand{\ObservationNoMainTuples}{
+    \Observation
+    \TxtObservationNoMainTuples
+}
+
+\newcommand{\ObservationNoMainClasses}{
+    \Observation
+    \TxtObservationNoMainClasses
+}
+
+\newcommand{\ObservationNoMainTuplesPlural}{
+    \Observation
+    \TxtObservationNoMainTuplesPlural
+}
+
+
+\newcommand{\DoProblem}[1]{
+    \clearpage
+    \input{problem.#1.tex}
+    \Solution
+}
+
+\newcommand{\Solution}{
+    % empty
+}
+
+\newcommand{\FigureL}[2]{
+    \parpic[l]{\includegraphics[#1]{#2.eps}}
+}
+
+\newcommand{\FigureC}[2]{
+    \begin{center}
+        \includegraphics[#1]{#2.eps}
+    \end{center}
+}
+
+\newcommand{\FigureR}[2]{
+    \parpic[r]{\includegraphics[#1]{#2.eps}}
+}
+
+
+% Entre cometes simples (quoted).
+\newcommand{\q}[1]{`\texttt{\small #1}'}
+
+% Entre cometes dobles (double quoted).
+\newcommand{\qq}[1]{``\texttt{\small #1}''}
+
+% Sense cometes per� el mateix est�l (unquoted).
+\newcommand{\uq}[1]{\texttt{\small #1}}
+
+
+\newcommand{\directori}{}
+
+\newcommand{\CPP}{C++}
+
+\newcommand{\Link}[1]{
+     \textsf{\footnotesize{#1}}
+}
+
+
+
+
+%%% LISTINGS
+
+\lstset{language=C++}
+\lstset{columns=flexible}
+%\lstset{basewidth={1em,1em}}
+\lstset{keepspaces=true}
+\lstset{morekeywords={string,include,cin,cout,endl}}
+\lstset{stringstyle=\ttfamily}
+\lstset{commentstyle={}}
+\lstset{numberstyle=\tiny\sffamily}
+\lstset{numbersep=-5pt}
+\lstset{keywordstyle=\bfseries}
+\lstset{identifierstyle=\itshape}
+\lstset{showstringspaces=false}
+%\lstset{upquote=true}
+\lstset{texcl=true}
+\lstset{literate={->}{$\rightarrow$}1 {<=}{$\le$}1 {>=}{$\ge$}1 {!=}{$\neq$}1 {<<}{$<\!\!\!<$}2 {>>}{$>\!\!\!>$}2}
+\lstset{xleftmargin=0.25cm}
+
+%\lstMakeShortInline@       Aquesta comanda el principal, perqu� aqu� hem potinejat les @,
+
+
+\renewcommand{\footnote}[1]{ (#1)}
+
+
+
+\newcommand{\UseHaskell}{
+    \lstset{language=Haskell}
+    \lstset{columns=fullflexible}
+    \lstset{literate={<=}{$\le$}1 {>=}{$\ge$}1 {/=}{$\neq$}1 {->}{$\rightarrow$}1 {=>}{$\Rightarrow$}1}
+    \lstset{deletekeywords={insert}}
+}
+
+\newcommand{\UsePython}{
+    \lstset{language=Python}
+    \lstset{columns=fullflexible}
+    %\lstset{literate={<=}{$\le$}1 {>=}{$\ge$}1 {/=}{$\neq$}1 {->}{$\rightarrow$}1 {=>}{$\Rightarrow$}1}
+}
