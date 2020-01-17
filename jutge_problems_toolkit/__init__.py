@@ -35,14 +35,32 @@ errors = []
 
 
 # ----------------------------------------------------------------------------
+# Check for missing dependencies
+# ----------------------------------------------------------------------------
+
+def check_dependencies():
+    result = subprocess.run(['dpkg-query', '-l', 'build-essential', 'ghc', 'python3', 'python-yaml', 'texlive-full'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    res = str(result.stderr).split('\\n')
+
+    missing_list = []
+    for line in res:
+        if "no packages found matching" in line:
+            missing_list.append(line.split()[-1])
+
+    if missing_list:
+        print('The following dependencies are missing, please install them and try again: ', end='')
+        for missing_dep in missing_list:
+            if missing_dep == missing_list[-1]: print(missing_dep)
+            else: print(missing_dep, end=', ')
+        exit()
+
+
+# ----------------------------------------------------------------------------
 # Make executable file
 # ----------------------------------------------------------------------------
 
-
 def make_executable():
     """Compiles the solution in thw cwd."""
-    from glob import glob
-    print(glob('./*'))
 
     if not util.file_exists("handler.yml"):
         raise Exception("handler.yml does not exist")
@@ -193,7 +211,7 @@ def make_executable_Haskell():
     util.del_file("work.o")
     util.copy_file("solution.hs", "work.hs")
     f = open("work.hs", "a")
-    print >>f, """main = do print "OK" """
+    print("""main = do print "OK" """, file=f)
     f.close()
 
     util.system("ghc -O3 work.hs")
@@ -231,7 +249,6 @@ def make_executable_Java():
 # ----------------------------------------------------------------------------
 # Make correct files
 # ----------------------------------------------------------------------------
-
 
 def make_corrects():
     """Makes all correct files in the cwd."""
@@ -271,15 +288,15 @@ def make_corrects_RunHaskell():
         if util.file_exists("judge.hs"):
             os.system("cat judge.hs >> work.hs")
         f = open("work.hs", "a")
-        print >>f, "main = do"
+        print("main = do", file=f)
         for line in open(tst + ".inp").readlines():
             line = line.rstrip()
             if line.startswith("let "):
-                print >>f, "    %s" % line
+                print("    %s" % line, file=f)
 #            elif line.startswith("deb "):
 #                print >>f, '    hPutStrLn stderr "%s"' % line
             else:
-                print >>f, "    print (%s)" % line
+                print("    print (%s)" % line, file=f)
         f.close()
         util.system("runhaskell work.hs >%s.cor" % (tst, ))
 
@@ -325,7 +342,6 @@ def make_corrects_R():
             util.system("Rscript solution.R <%s.inp >%s.cor" % (tst, tst))
 
 
-
 def make_corrects_Java():
     for f in glob.glob("*.cor"):
         util.del_file(f)
@@ -351,14 +367,13 @@ def python_doctest(tst):
             x = ">>> " + x[15:-2]
         elif x.startswith('>>> print(') and x.endswith(')'):
             x = ">>> " + x[10:-1]
-        print >>f, x
+        print(x, file=f)
     f.close()
 
 
 # ----------------------------------------------------------------------------
 # Verify program
 # ----------------------------------------------------------------------------
-
 
 def verify_program(program):
     """Verify that program compiles and gets AC for each test."""
@@ -406,7 +421,6 @@ def verify_program(program):
 # ----------------------------------------------------------------------------
 # Make printable files (ps & pdf)
 # ----------------------------------------------------------------------------
-
 
 def make_prints_3(lang, ori):
 
@@ -474,7 +488,7 @@ handler.yml: \verbatimtabinput{handler.yml}
     # r = os.system("latex main")
     if r != 0:
         os.system('cat main.err')
-        raise Exception("latex error")
+        raise Exception("LaTeX error, please make sure that LaTeX is installed on your computer.")
 
     print("dvips")
     r = os.system("dvips main -o 1> /dev/null 2>/dev/null")
@@ -559,7 +573,6 @@ def make_all():
 # Make everything recursively
 # ----------------------------------------------------------------------------
 
-
 def make_recursive_2():
 
     sys.stdout.flush()
@@ -609,7 +622,6 @@ def make_recursive(paths):
 # Make a list of problems recursively
 # ----------------------------------------------------------------------------
 
-
 def make_list_2():
 
     cwd = os.getcwd()
@@ -642,12 +654,10 @@ def make_list(paths):
 
 
 # ----------------------------------------------------------------------------
-# Make a ources list of problems recursively
+# Make a sources list of problems recursively
 # ----------------------------------------------------------------------------
 
-
 ctr = 0
-
 
 def make_srclst_2():
     global ctr
@@ -687,6 +697,7 @@ def make_srclst(paths):
 # ----------------------------------------------------------------------------
 
 def main():
+    check_dependencies()
 
     # Create and configure the option parser
     parser = argparse.ArgumentParser(
@@ -718,6 +729,8 @@ def main():
 
     # Parse options with real arguments
     args, paths = parser.parse_known_args()
+
+
 
     # Do the work
     done = False

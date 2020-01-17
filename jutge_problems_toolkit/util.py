@@ -117,7 +117,7 @@ def write_yml (path, inf):
 
 
 def read_yml (path):
-    return yaml.load(open(path, 'r'))
+    return yaml.load(open(path, 'r'), Loader=yaml.FullLoader)
 
 
 
