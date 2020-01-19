@@ -380,42 +380,68 @@ def verify_program(program):
 
     # This implementation is not yet very functional, but works well in basic cases
 
-    # compile
-    program = os.path.splitext(program)[0]
-    if not util.file_exists(program + ".cc"):
-        raise Exception("%s.cc does not exist" % program)
     if not util.file_exists("handler.yml"):
         raise Exception("handler.yml does not exist")
     handler = util.read_yml("handler.yml")
     if handler["handler"] != "std":
         raise Exception("unknown handler")
-    util.del_file(program + ".exe")
-    if util.file_exists("main.cc"):
-        raise Exception("not implemented yet")
-        if handler["source_modifier"] == "structs":
-            util.system("cat solution.cc main.cc > temporal.cc ; %s %s temporal.cc -o solution.exe ; rm temporal.cc" % (cxx, cxxflags))
-        else:
-            util.system("%s %s solution.cc main.cc -o solution.exe" % (cxx, cxxflags))
-    else:
-        if util.file_exists("solution.fallback"):
-            raise Exception("not implemented yet")
-            util.system("%s %s solution.cc -o solution.exe" % (cxx, cxxflags_fallback))
-        else:
-            util.system("%s %s %s.cc -o %s.exe" % (cxx, cxxflags, program, program))
-    if not util.file_exists(program + ".exe"):
-        raise Exception(program + ".exe not created")
+
+    # compile
+    supported_list = []
+    solution_list = sorted(glob.glob(program + ".*"))
+    solution_list.remove(program + ".exe")
+    for solution in solution_list:
+        ext = solution.split('.')[-1]
+        if ext == "cc" or ext == "c":
+            supported_list.append(solution)
+            if util.file_exists("main." + ext):
+                if handler["source_modifier"] == "structs":
+                    if ext == "cc": util.system("cat solution.cc main.cc > temp.cc ; %s %s temp.cc -o solution-cc.exe ; rm temp.cc" % (cxx, cxxflags))
+                    else: util.system("cat solution.c main.c > temp.c ; %s %s temp.c -o solution-c.exe ; rm temp.c" % (cc, ccflags))
+                else:
+                    if ext == "cc": util.system("%s %s solution.cc main.cc -o solution-cc.exe" % (cxx, cxxflags))
+                    else: util.system("%s %s solution.c main.c -o solution-c.exe" % (cc, ccflags))
+            else:
+                if util.file_exists("solution.fallback"):
+                    if ext == 'cc': util.system("%s %s solution.cc -o solution-cc.exe" % (cxx, cxxflags_fallback))
+                    else: util.system("%s %s solution.c -o solution-c.exe" % (cc, ccflags_fallback))
+                else:
+                    if ext == 'cc': util.system("%s %s %s.cc -o %s-cc.exe" % (cxx, cxxflags, program, program))
+                    else: util.system("%s %s %s.c -o %s-c.exe" % (cxx, cxxflags, program, program))
+
+            if not util.file_exists(program + "-" + ext + ".exe"):
+                raise Exception(program + "-" + ext + ".exe not created")
+        if ext == "py":
+            supported_list.append(solution)
+
+    '''print("Supported list:")
+    for elem in supported_list:
+        print(elem)
+
+    print("Unsupported list:")
+    for elem in [x for x in solution_list if x not in supported_list]:
+        print(elem)'''
 
     # execute on tests
     tests = sorted(glob.glob("*.inp"))
-    for test in tests:
-        test = os.path.splitext(test)[0]
-        os.system("./%s.exe < %s.inp > %s.out" % (program, test, test))
-        r = subprocess.call(["cmp", test + ".out", test + ".cor"])
-        if r:
-            msg = "WA"
-        else:
-            msg = "OK"
-        print("%s:\t\t%s" % (test, msg))
+    for solution in supported_list:
+        print("Verifying " + solution + "...")
+        for test in tests:
+            ext = solution.split('.')[-1]
+            if ext == 'cc' or ext == 'c':
+                test = os.path.splitext(test)[0]
+                os.system("./%s-%s.exe < %s.inp > %s.out" % (program, ext, test, test))
+            if ext == 'py':
+                test = os.path.splitext(test)[0]
+                os.system("python3 ./%s < %s.inp > %s.out" % (solution, test, test))
+
+            r = subprocess.call(["cmp", test + ".out", test + ".cor"])
+            if r:
+                msg = "WA"
+            else:
+                msg = "OK"
+            print("%s:\t\t%s" % (test, msg))
+
 
 
 # ----------------------------------------------------------------------------
