@@ -1,0 +1,40 @@
+
+\Problem{Treasures in a map (1)}
+
+\Statement
+
+Write a program that, given a map with treasures and obstacles,
+indicates if is possible or not to arrive to any treasure
+from a given initial position.
+The allowed movements are horizontal or vertical,
+but not diagonal.
+If it is necessary, passing over the treasures is allowed.
+
+
+\Input
+
+Input starts with the number of rows $n$ and the number of columns $m$ of the map.
+$n$ rows follow with $m$ characters each one.
+A dot indicates an empty position,
+a \texttt{'X'} indicates an obstacle,
+and a \texttt{'t'} indicates a treasure.
+Finally, a pair of numbers $r$ and $c$
+indicates the initial row and column (both of them starting with 1)
+where your program must start to look for the treasures.
+You can suppose that $n > 0$, that $m > 0$,
+that $r$ will be between 1 and $n$, that $c$ will be between 1 and $m$,
+and that the initial position will be always in an empty position.
+
+
+\Output
+
+Your program must print \texttt{"1"} or \texttt{"0"}
+depending on if it possible or not to arrive to any treasure.
+
+
+\Observation
+
+The simplest way to solve this exercise does not use any queue.
+
+
+\SampleTwoCol

@@ -1,0 +1,59 @@
+\Problem{El campanar de la Torrassa}
+
+
+\Statement
+
+
+\FigureR{width=5cm}{campanar} 
+\emph{El Campanar de la Torrassa} és un campanar que es troba al barri de
+Collblanc-La Torrassa de L'Hospitalet de Llobregat. Aquest campanar és ben
+conegut per molestar continuament a tots els seus veïns amb les seves
+campanades.
+Dia i nit, les campanes sonen cada quart d'hora de la forma
+tradicional: Suposeu que són les set de la tarda. En aquest
+cas, a les 19:00 les campanes agudes toquen quatre cops i les campanes
+greus toquen 7 cops. Després, a un quart de vuit (19:15),
+les campanes agudes toquen un cop. Més tard, a dos quarts de vuit
+(19:30) les campanes agudes toquen dos cops. Finalment,
+a tres quart de vuit (19:45), les campanes agudes toquen tres cops.
+A més a més, cada dia al migdia les campanes greus toquen 100 cops enlloc
+de 12 per tal de senyalar l'\emph{Àngelus}. Les campanes sempre
+acaben de tocar en menys d'un minut.
+
+\medskip
+
+(De fet, aquesta situació és una simplificació, perquè en diumenges
+i festes assenyalades, hi ha campanades extra per les misses 
+especials, sense parlar del quinze d'agost, quan les campanes toquen durant
+tot el dia.)
+
+\medskip
+
+Una ONG que lluita contra la pol·lució acústica a les ciutats
+vol comptar el nombre de cops que les campanes d'aquest campanar
+sonen en un gran interval de temps. Concretament, necessiten un
+programa que, donada una hora d'inici i una llargada de temps,
+calculi el nombre de campanades que sonen en aquest periode de temps.
+
+
+\Input
+
+L'entrada conté diferents jocs de proves, un per línia. Cada joc de proves
+consisteix en tres enters: $h$ i $m$ codefiquen l'hora d'inici ($h$:$m$) i
+satisfàn $0\le h\le 23$ i $0\le m\le 59$; $t$ codefica la llargada de temps
+(en minuts) del temps que es vol mesurar i satisfà $0\le t\le2^{28}$. 
+
+\Output
+
+Per a cada joc de proves, cal escriure en una línia un enter corresponent
+al nombre de cops que les campanades toquen començant a l'hora $h$:$m$ 
+i durant un periode de $t$
+minuts.
+
+
+\Sample
+
+\Observation
+
+Aquest problema va aparèixer a les semifinals del 2n Concurs de Programació de
+la UPC.

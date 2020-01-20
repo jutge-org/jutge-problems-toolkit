@@ -1,0 +1,70 @@
+\Problem{The return of campanar de la Torrassa}
+
+
+\Statement
+
+
+\FigureR{width=5cm}{campanar} 
+\emph{El Campanar de la Torrassa} is the bell tower of a church
+located in the district of La Torrassa in the city of L'Hospitalet de
+Llobregat. This bell tower is well known for continuously annoying its
+neighbors with the sound of its bells.
+
+\medskip 
+
+Recently, this church is short of money. For this reason the
+priest has decided to sell one of the two bells of its bell tower
+(precisely, the one that had a basser sound). With only one bell,
+it is not possible to give the time in the traditional way (see problem
+\Link{LOOP}).
+Therefore, the priest has invented a new form of giving the time: At
+every hour, the bell sounds as many times as the hour is (from one
+to twelve); also, the bell sounds once at a quarter past any hour, once at a half
+past any hour and once also at a quarter to any hour. For instance, at 19:00,
+the bell sounds seven times.
+The same happens at 7:00. Also, at 19:15 the bell
+sounds once, and at 19:30 and at 19:45 also sounds once.
+
+\medskip
+
+The priest has informed the neighbors that, with his new method, the
+bells sound less times than before. For instance, if someone wakes up in the morning,
+at 3:18, he will hear a bell sound at
+3:30, another at 3:45 and four bell sounds at 4:00. You can check out
+that this person has had to wait 42 minutes to be able to know which
+time it is exactly since he has waken up, and that
+he has heard six bell sounds.
+However, with the traditional system, this person would have heard
+thirteen bell sounds before knowing what time it is.
+
+\medskip
+
+Write a program that reads a time and prints the number
+of minutes that someone has to wait to know exactly what time it is and how many
+bell sounds has heard during this period.
+
+
+\Input
+
+Input contains various test cases, one per line. Each test case contains
+two integer numbers $h$ and $m$ that indicate the time to wake up ($h$:$m$) and
+satisfy $0\le h\le 23$ and $0\le m\le 59$. 
+
+
+\Output
+
+For each test case $h$:$m$, the output
+must include a line with two integer numbers separated by a space.
+The second integer indicates the number of minutes that someone
+has to wait (starting at $h$:$m$) to know exactly what time it is.
+The first integer indicates the number of bell sounds that have been
+heard in this period of time.
+
+
+\Sample
+
+\Observation
+
+This problem is from the semifinals of the 4th UPC Programming Competition 
+and concludes the Trilogy of El campanar de la Torrassa. Jordi Petit has denied
+the rumors which say that he is preparing a prequel.

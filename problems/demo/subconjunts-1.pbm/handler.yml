@@ -1,0 +1,8 @@
+handler: std
+source_modifier: none
+checker: elastic2
+separator1: "\n"
+separator2: ","
+starting: "{"
+ending: "}"
+presentation_error: 1

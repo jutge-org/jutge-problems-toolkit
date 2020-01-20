@@ -1,0 +1,53 @@
+\Problem{El campanar de la Torrassa contraataca}
+
+
+\Statement
+
+
+\FigureR{width=5cm}{campanar} 
+\emph{El Campanar de la Torrassa} és un campanar que es troba al barri de
+Collblanc-La Torrassa de L'Hospitalet de Llobregat. Aquest campanar és ben
+conegut per molestar dia i nit a tots els seus veïns amb les seves
+campanades.
+
+\medskip Recentment, el capellà d'aquesta església ha decidit iniciar
+una col·lecta per tal de comprar una nova campana de ferro per posar
+a dalt de tot del campanar. Els seus plans són de fer
+sonar aquesta nova campana cada cop que les busques del rellotge se
+solapen. Així, per exemple, la nova campana hauria de tocar a les 12:00
+i cap a les 13:05. Segons el capellà, aquesta innovació doblarà el nombre de
+fidels a missa (cosa que no li hauria de costar gaire perquè la seva església
+és buida quasi sempre).
+
+\medskip Abans de donar diners al capellà de la Torrassa, el bisbat
+està interessat en saber el nombre de vegades que aquesta campana tocarà 
+en un llarg periode de temps. En particular, el bisbat necessita un programa
+que, donat un instant d'inici i una llargada de temps, compti el nombre
+de cops que la nova campana sonarà en aquest periode de temps.
+Cal tenir en compte que, a causa del retard inherent al moviment
+del martell cap a la campana, la nova camapana sonarà trenta nou milisegons
+després que les busques del rellotge coïncideixin.
+
+
+
+\Input
+
+L'entrada està formada per diferents jocs de proves, cadascun en una línia.
+Cada joc de proves constisteix de tres enters $h$, $m$ i $t$. $h$ i $m$ 
+representen l'instant d'inici 
+($h$:$m$) i satisfan $0\le h\le 23$ i $0\le m\le 59$. $t$
+representa la llargada, en minuts, del temps que cal mesurar i satisfà
+$0\le t \le2^{30}$. 
+
+\Output
+
+Per a cada joc de proves $h$, $m$, $t$, 
+la sortida ha d'incloure una línia amb un enter denotant
+el nombre de cops que la nova campana sonarà començant a les 
+$h$:$m$ i per un periode de $t$ minuts.
+
+
+\Observation
+
+Aquest problema va aparèixer a les semifinals del 3r Concurs de Programació de
+la UPC.

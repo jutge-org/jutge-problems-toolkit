@@ -1,0 +1,40 @@
+
+\Problem{Tresors en un mapa (1)}
+
+\Statement
+
+Feu un programa que, donat un mapa amb tresors i obstacles,
+digui si és possible o no arribar fins a algun dels tresors
+des d'una posició inicial donada.
+Els moviments permesos són horitzontals o verticals,
+però no diagonals.
+Si cal, es pot passar per sobre dels tresors.
+
+
+\Input
+
+L'entrada comença amb el nombre de files $n$ i de columnes $m$ del mapa.
+Segueixen $n$ files amb $m$ caràcters cadascuna.
+Un punt indica una posició buida,
+una \texttt{'X'} indica un obstacle,
+i una \texttt{'t'} indica un tresor.
+Finalment, un parell de nombres $f$ i $c$
+indiquen la fila i columna inicials (ambdues començant en 1)
+des de les quals cal començar a buscar tresors.
+Podeu suposar que $n > 0$, que $m > 0$,
+que $f$ estarà entre 1 i $n$, que $c$ estarà entre 1 i $m$,
+i que la posició inicial sempre estarà lliure.
+
+
+\Output
+
+Escriviu \texttt{"1"} o \texttt{"0"}
+depenent de si és possible o no arribar a algun dels tresors.
+
+
+\Observation
+
+La manera més senzilla de resoldre aquest exercici no usa cap cua.
+
+
+\SampleTwoCol

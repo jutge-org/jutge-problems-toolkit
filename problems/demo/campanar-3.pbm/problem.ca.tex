@@ -1,0 +1,66 @@
+\Problem{El retorn del campanar de la Torrassa}
+
+
+\Statement
+
+
+\FigureR{width=5cm}{campanar} 
+\emph{El Campanar de la Torrassa} és un campanar que es troba al districtre de
+Collblanc-La Torrassa de L'Hospitalet de Llobregat. Aquest campanar és ben
+conegut per molestar continuament a tots els seus veïns amb les seves
+campanades.
+
+\medskip Recentment, aquesta esgésia s'està quedant curta de diners, de forma que
+el seu capellà ha decidit vendre una de les dues campanes del seu campanar
+(concretament, la que tenia un so més greu). Amb una sola campana, ja no és
+possible tocar les hores de la forma tradicional (vegeu problema \Link{LOOP}).
+Per tant, el capellà ha inventat una nova forma de tocar les hores: A cada hora,
+la campana sona tants cops com quina hora és (d'un a dotze); també,
+la campana sona un cop als quarts, un cop als dos quarts i un cop també
+als tres quarts. Per exemple, a les 19:00, la campana toca set cops.
+El mateix passa a les 7:00. També, a les 19:15 la campana
+toca un cop, i a les 19:30 i a les 19:45 també toca un cop.
+
+\medskip
+
+El capellà ha informat tot content als veïns que, amb el seu nou mètode,
+les campanes toquen menys cops que abans. Per exemple, si algú es desperta
+a la matinada, diguem a les 3:18, sentirà una campanada a les 3:30,
+una altra a les 3:45 i quatre campanades a les 4:00. Podeu comprovar
+que aquesta persona ha hagut d'esperar 42 minuts per poder saber quina
+hora és exactament des que s'ha despertat, i que ha sentit sis campanades.
+En canvi, amb el sistema tradicional, aquesta persona hauria sentit tretze
+campanades fins saber quina hora és.
+
+\medskip
+
+Feu un programa que llegeixi una hora i escrigui el nombre de minuts
+que algú ha d'esperar per saber exactament quina hora és i quantes
+campanades ha de sentir mentrestant.
+
+\Input
+
+L'entrada conté diferents proves, una per línia. Cada prova conté
+dos enters $h$ i $m$ que codefiquen l'hora de despertar-se ($h$:$m$) i
+satisfan $0\le h\le 23$ i $0\le m\le 59$. 
+
+
+\Output
+
+Per a cada prova $h$:$m$, la sortida 
+ha d'incloure una línia amb dos enters separats per un blanc.
+El segon enter denota el nombre de minuts que algú ha d'esperar
+(començant a $h$:$m$) per saber exactament quina hora és.
+El primer enter denota el nombre de campanades que s'han sentit en
+aquest interval de temps.
+
+
+\Sample
+
+\Observation
+
+Aquest problema va aparèixer a les semifinals del 4t Concurs de Programació de
+la UPC i conclou la Trilogia del Campanar de la Torrassa. En Jordi Petit ha
+desmentit els rumors que diuen que està preparant una precuela.
+
+

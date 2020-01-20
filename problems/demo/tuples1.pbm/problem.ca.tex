@@ -1,0 +1,28 @@
+\Problem{Estudiants}
+
+\Statement
+
+Usant la definició 
+
+\begin{lstlisting}
+    struct Estudiant {
+        int dni;
+        string nom;
+        double nota;        // La nota és un valor entre 0 i 10, o -1 que representa NP
+        bool repetidor;
+    };
+\end{lstlisting}
+
+implementeu l'acció
+
+\begin{lstlisting}
+    void informacio(const vector<Estudiant>& es, double& min, double& max, double& mitj)
+\end{lstlisting}
+
+que calculi la nota mínima (|min|), la nota màxima (|max|) i la nota
+mitjana (|mig|) de tots els estudiants de la taula |es| que s'hagin
+presentat i que no siguin
+repetidors. Si no hi ha cap estudiant no repetidor presentat, el valor
+d'aquestes tres variables ha de ser $-1$.
+
+\ObservationNoMainTuples

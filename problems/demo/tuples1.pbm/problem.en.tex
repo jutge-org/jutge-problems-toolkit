@@ -1,0 +1,27 @@
+\Problem{Students}
+
+\Statement
+
+Using the definition
+
+\begin{lstlisting}
+    struct Student {
+        int idn;
+        string name;
+        double mark;        // The mark is a value between 0 and 10, or -1 that represents NP
+        bool repeater;
+    };
+\end{lstlisting}
+
+implement the procedure
+
+\begin{lstlisting}
+    void information(const vector<Student>& stu, double& min, double& max, double& avg)
+\end{lstlisting}
+
+that computes the minimal mark (|min|), the maximal mark (|max|) and the
+average mark (|avg|) of all the students of the table stu that have taken
+the examn and that are not repeaters. If there is not any student that has
+these requirements, the value of these parameters must be $-1$.
+
+\ObservationNoMainTuples

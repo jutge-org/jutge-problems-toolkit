@@ -1,0 +1,52 @@
+\Problem{El campanar de la Torrassa}
+
+
+\Statement
+
+
+\FigureR{width=5cm}{campanar} 
+\emph{El Campanar de la Torrassa} (see picture) is the bell tower of a church
+located in the district of La Torrassa in the city of L'Hospitalet de
+Llobregat. This bell tower is well known for continuously annoying its
+neighbors with the sound of its bells.
+
+Day or night, the bells sound every quarter in the traditional way: Suppose it
+is seven in the afternoon (19:00). In this case, at 19:00 the treble bells
+sound 4 times and the bass bells sound 7 times. Then, at 19:15 the treble
+bells sound once. Latter, at 19:30 the treble bells sound twice. Finally, at
+19:45 the treble bells sound three times.  Additionally, each day at noon the
+bass bells sound 100 times rather than 12 to signal the \emph{Angelus}. The
+bells always finish playing within the first minute (that is, at 19:01, 19:16,
+19:31, 19:46, etc.).
+
+\medskip
+
+(This is a simplification, because on Saturdays, Sunday and important dates
+extra bells are played to signal special masses, not to count the 15th of
+August, when they play all day long.)
+
+\medskip
+
+A non governmental organization that fights acoustic pollution wants to count
+the number of times that the bells of the bell tower sound in a large amount of
+time. Specifically, they need a program, that given a starting time and a
+length, computes the number of times the bells sound in this period of time.
+
+\Input
+
+Input is made of several test cases, each one on a line. Each test case
+consists of three integer numbers:
+$h$ and $m$ encode the starting
+time ($h$:$m$) and satisfy $0\le h\le 23$ and $0\le m\le 59$;
+$\ell$ encodes the length, in
+minutes, of the time we want to measure and satisfies $0\le\ell\le2^{28}$.
+
+\Output
+
+For each test case, output must include a line with an integer denoting the
+number of times that the bells sound starting at $h$:$m$ for a length of $\ell$
+minutes.Sample
+
+\Observation
+
+This problem is from the 2nd UPC Programming Competition.

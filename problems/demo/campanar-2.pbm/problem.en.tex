@@ -1,0 +1,57 @@
+\Problem{El campanar de la Torrassa fights back}
+
+
+\Statement
+
+
+\FigureR{width=5cm}{campanar} 
+\emph{El Campanar de la Torrassa} is the bell tower of a church
+located in the district of La Torrassa in the city of L'Hospitalet de
+Llobregat. This bell tower is well known for continuously annoying its
+neighbors with the sound of its bells.
+
+\medskip 
+
+Recently, the priest of this church has decided to start a collection
+in order to buy a new bell of iron to put in the highest part
+of the bell tower. He wants that this bell sounds every time
+the needles of the clock are overlapped. Thus, for instance, the new bell should
+sound at 12:00 and about 13:05. According to the priest, this
+innovation will double the number of believers in mass (which
+should not be very difficult because his church is empty almost always).
+
+\medskip
+
+Before giving the money to the priest of La Torrassa, the
+bishopric is interested in knowing the number of times that this bell
+will sound in a long periode of time. In particular,
+the bishopric needs a program that, given a starting time and a length,
+counts the number of times that the new
+bell will sound in this period of time.
+It is necessary to take into account that, because of the
+delay inherent to the movement of the hammer towards the bell, the new
+bell will sound thirty nine miliseconds after the needles of the clock
+overlap.
+
+
+
+\Input
+
+Input is formed by different test cases, one per line.
+Each test case consists of three integer numbers $h$, $m$ and $t$. $h$ and $m$ 
+represent the starting time 
+($h$:$m$) and satisfy $0\le h\le 23$ and $0\le m\le 59$. $t$
+represents the length, in minutes, of the time that must be measured and satisfies
+$0\le t \le2^{30}$. 
+
+\Output
+
+For each test case, $h$, $m$, $t$,
+the output must include a line with an integer indicating
+the number of times that the new bell will sound starting at
+$h$:$m$ and for a legth of $t$ minutes.
+
+
+\Observation
+
+This problem is from the 3rd Programming Competition of the UPC.
