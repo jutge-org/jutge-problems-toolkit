@@ -5,7 +5,7 @@ import os
 from setuptools import setup
 from glob import glob
 
-version = "1.0"
+version = "1.1"
 
 print(glob('jutge_problems_toolkit/sty/*'))
 setup(
