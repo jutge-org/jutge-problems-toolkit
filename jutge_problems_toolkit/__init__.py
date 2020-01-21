@@ -13,6 +13,7 @@ import argparse
 import subprocess
 import re
 import subprocess
+from shutil import which
 
 from . import util
 
@@ -39,13 +40,12 @@ errors = []
 # ----------------------------------------------------------------------------
 
 def check_dependencies():
-    result = subprocess.run(['dpkg-query', '-l', 'build-essential', 'ghc', 'python3', 'python-yaml', 'texlive-full'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    res = str(result.stderr).split('\\n')
-
+    check_list = ['g++', 'gcc', 'tex']
     missing_list = []
-    for line in res:
-        if "no packages found matching" in line:
-            missing_list.append(line.split()[-1])
+
+    for program in check_list:
+        if which(program) is None:
+            missing_list.append(program)
 
     if missing_list:
         print('The following dependencies are missing, please install them and try again: ', end='')
@@ -538,6 +538,7 @@ def make_prints2(lang):
     print(ori, lang, tmp)
     from glob import glob
     print(glob(os.path.dirname(os.path.abspath(__file__) + "/sty/*")))
+
     os.system("cp * %s/sty/* %s" % (os.path.dirname(os.path.abspath(__file__)), tmp))
     os.chdir(tmp)
 

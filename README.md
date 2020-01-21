@@ -17,8 +17,8 @@ This toolkit is a CLI interface that will help you generate all necessary files 
       * [Scores](#scores)
       * [Awards](#awards)
 * [Demo problems](#demo-problems)
-   * [Credits](#credits)
-   * [License](#license)
+* [Credits](#credits)
+* [License](#license)
 
 
 
@@ -31,7 +31,7 @@ LaTeX and various packages of LaTeX. If you intend to use other compilers (e.g. 
 ## Ubuntu
 
 ```bash
-sudo apt-get install build-essential ghc python3 python3-yaml texlive-full
+sudo apt-get install build-essential python3 texlive-full
 ```
 
 ## Mac
@@ -298,6 +298,8 @@ handler: std
 source_modifier: none
 ````
 
+
+
 ### Checker
 
 With the `checker` option you can specify how the user's program output is compared with the problem solution. This is especially useful if the order of the output does not matter, for example. There are various `checker` options:
@@ -316,6 +318,8 @@ With the `checker` option you can specify how the user's program output is compa
 - `external`: used to check for outputs using an external program that reads the input and the generated output and writes to `stdout` the verdict. This checker has the following options:
   - `external_program`: Name of the external program used. If the program does not exist, an IE (Internal Error) verdict will be returned.
   - `external_timeout`: Time that the external program has to do its work. The default time is 5 seconds. An IE (Internal Error) verdict will be returned it the program runs for more than the timeout.
+
+
 
 ## Tags
 
@@ -385,7 +389,7 @@ The `test.ops` file can be used to specify some limits for the correction of the
 
 - `--maxfiles` or `-f`: set the maximum number of files that can be opened simultaneously.
 - `--maxoutput` or `-o`: Set the maximum size that a file created by the program can have.
-- `--maxtime` or `-t`: Set the maximum execution time. If the time is exceeded, the program will not be accepted and the verdict will be "Execution Error" (EE).
+- `--maxtime` or `-t`: Set the maximum execution time that the problem solution can take. Users will have twice the time that the problem solution has (will be improved in the future). If the time is exceeded, the program will not be accepted and the verdict will be "Execution Error" (EE).
 
 
 
@@ -457,45 +461,38 @@ The `award.html` file should contain a description of the award using simple HTM
 The directory problems is intended to store your problems. As a template, some demonstration problems have already been placed in the `demo` subdirectory. The following list shows their main features.
 
 - `bon-dia.pbm`:
-- Basic template
+    - Basic template
     - Multiple languages (ca, es, en) in different directories
-    
 - `tresors-1.pbm`:
-- Basic template
+    - Basic template
     - Multiple languages (ca, en) in just one directory (same solution)
     - Awards
-
 - `campanar-1.pbm`:
-- Basic template
+    - Basic template
     - Multiple languages (ca, en) in just one directory (same solution)
     - Figures
     - Awards
     - `*.ops` files
     - `generate.cc`
-
 - `campanar-2.pbm`:
-- Basic template
+    - Basic template
     - Multiple languages (ca, en) in just one directory (same solution)
     - Figures
     - Awards
     - `generate.cc`
-
 - `campanar-3.pbm`:
-- Basic template
+    - Basic template
     - Multiple languages (ca, en) in just one directory (same solution)
     - Figures
     - Awards
     - `generate.cc`
     - `generate.py`
-
 - `tuples1.pbm`:
-- Structs template
-    
+    - Structs template
 - `permutacions.pbm`:
-- Elastic checker
-    
+    - Elastic checker
 - `subconjunts-1.pbm`:
-- Double elastic checker
+    - Double elastic checker
 
 
 

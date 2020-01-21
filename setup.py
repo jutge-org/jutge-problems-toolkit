@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
+import os
 from setuptools import setup
 from glob import glob
 
 version = "1.0"
+
+print(glob('jutge_problems_toolkit/sty/*'))
 setup(
     name='jutge-problems-toolkit',
     packages=['jutge_problems_toolkit'],
@@ -32,7 +35,9 @@ setup(
         'Topic :: Education',
     ],
     zip_safe=False,
-    data_files=[('jutge_problems_toolkit/sty', glob('jutge_problems_toolkit/sty/*'))],
+    include_package_data=True,
     setup_requires=['setuptools'],
     entry_points={'console_scripts': ['jutge-problems-toolkit=jutge_problems_toolkit:main']}
 )
+
+print(os.path.abspath(__file__))
