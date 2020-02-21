@@ -229,6 +229,8 @@ int main() {
             util.write_file('compilation1.txt', "Unreported error. ")
             util.del_file(self.executable())
             return False
+
+
 class Compiler_GXX (Compiler):
 
     compilers.append('GXX')
@@ -326,6 +328,8 @@ int main() {
             util.write_file('compilation1.txt', "Unreported error. ")
             util.del_file(self.executable())
             return False
+
+
 class Compiler_P1XX (Compiler_GXX):
 
     compilers.append('P1XX')
@@ -335,6 +339,8 @@ class Compiler_P1XX (Compiler_GXX):
 
     def name(self):
         return 'GNU C++ Compiler with extra flags for beginners'
+
+
 class Compiler_GXX11 (Compiler_GXX):
 
     compilers.append('GXX11')
@@ -347,18 +353,8 @@ class Compiler_GXX11 (Compiler_GXX):
 
     def flags2(self):
         return '-D_JUDGE_ -DNDEBUG -O2 -std=c++11'
-class Compiler_GXX17 (Compiler_GXX):
 
-    compilers.append('GXX17')
 
-    def name(self):
-        return 'GNU C++17 Compiler'
-
-    def flags1(self):
-        return '-D_JUDGE_ -DNDEBUG -O2 -std=c++17'
-
-    def flags2(self):
-        return '-D_JUDGE_ -DNDEBUG -O2 -std=c++17'
 class Compiler_GHC (Compiler):
 
     compilers.append('GHC')
@@ -439,6 +435,8 @@ class Compiler_GHC (Compiler):
         util.del_file('modified.hi')
         util.del_file('modified.o')
         return util.file_exists(self.executable())
+
+
 class Compiler_RunHaskell (Compiler):
 
     compilers.append('RunHaskell')
@@ -530,6 +528,8 @@ class Compiler_RunHaskell (Compiler):
             return True
         else:
             return False
+
+
 class Compiler_RunPython (Compiler):
 
     compilers.append('RunPython')
@@ -612,6 +612,8 @@ py_compile.compile(sys.argv[1])
 
         self.del_wrapper()
         return False
+
+
 class Compiler_JDK (Compiler):
 
     compilers.append('JDK')
@@ -710,6 +712,8 @@ class WrapperMain {
             return False
         self.del_wrapper()
         return util.file_exists('Main.class')
+
+
 class Compiler_Python3 (Compiler):
 
     compilers.append('Python3')
@@ -815,6 +819,8 @@ py_compile.compile(sys.argv[1])""")
             return False
         self.del_wrapper()
         return util.file_size('compilation2.txt') == 0
+
+
 class Compiler_R (Compiler):
 
     compilers.append('R')
@@ -919,6 +925,8 @@ checkUsage(wrapper_R)
         util.del_file("wrapper.R")
         util.del_file("modified.R")
         return True
+
+
 class Compiler_PRO2 (Compiler):
 
     compilers.append('PRO2')
@@ -983,6 +991,8 @@ class Compiler_PRO2 (Compiler):
             util.system("(cd private && tar cf ../private.tar *)")
             return True
         else: return False
+
+
 class Compiler_MakePRO2 (Compiler):
 
     compilers.append('MakePRO2')
