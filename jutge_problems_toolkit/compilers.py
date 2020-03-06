@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import sys
 import time
@@ -8,7 +10,7 @@ import math
 import glob
 import codecs
 
-from . import util
+from jutge_problems_toolkit import util
 
 # Maximum time to compile
 max_compilation_time = 30
@@ -121,7 +123,7 @@ class Compiler:
     def info(self):
         return {
             'compiler_id': self.id(),
-            'name': self.name(),
+            'name': self.name,
             'language': self.language(),
             'version': self.version(),
             'flags1': self.flags1(),
@@ -152,7 +154,8 @@ class Compiler_GCC (Compiler):
         return self.get_version('gcc --version', 0)
 
     def flags1(self):
-        return '-D_JUDGE_ -O2 -DNDEBUG -Wall -Wextra -Wno-sign-compare'#return '-D_JUDGE_ -DNDEBUG -O2'
+        # return '-D_JUDGE_ -DNDEBUG -O2'
+        return '-D_JUDGE_ -O2 -DNDEBUG -Wall -Wextra -Wno-sign-compare'
 
     def flags2(self):
         return ''
@@ -168,7 +171,8 @@ class Compiler_GCC (Compiler):
             ext = 'c.out'
             func = os
 
-        func.system("./%s < %s.inp > %s.%s" % (self.executable(), tst, tst, ext))
+        func.system("./%s < %s.inp > %s.%s" %
+                    (self.executable(), tst, tst, ext))
 
     def compile(self):
         if 'source_modifier' in self.handler and (self.handler['source_modifier'] == 'no_main' or self.handler['source_modifier'] == 'structs'):
@@ -180,7 +184,8 @@ class Compiler_GCC (Compiler):
         # Compile original program
         util.del_file(self.executable())
         try:
-            self.execute_compiler('gcc ' + self.flags1() + ' ' + self.name + '.c -o ' + self.executable() + ' -lm 2> compilation1.txt')
+            self.execute_compiler('gcc ' + self.flags1() + ' ' + self.name +
+                                  '.c -o ' + self.executable() + ' -lm 2> compilation1.txt')
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
             util.del_file(self.executable())
@@ -214,7 +219,8 @@ int main() {
         # Compile modified program
         util.del_file(self.executable())
         try:
-            self.execute_compiler('gcc ' + self.flags2() + ' modified.c -o ' + self.executable() + ' -lm 2> compilation2.txt')
+            self.execute_compiler('gcc ' + self.flags2() + ' modified.c -o ' +
+                                  self.executable() + ' -lm 2> compilation2.txt')
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
             util.del_file(self.executable())
@@ -229,6 +235,8 @@ int main() {
             util.write_file('compilation1.txt', "Unreported error. ")
             util.del_file(self.executable())
             return False
+
+
 class Compiler_GXX (Compiler):
 
     compilers.append('GXX')
@@ -249,10 +257,12 @@ class Compiler_GXX (Compiler):
         return self.get_version('g++ --version', 0)
 
     def flags1(self):
-        return '-std=c++11 -D_JUDGE_ -O2 -DNDEBUG -Wall -Wextra -Wno-sign-compare -Wshadow'#return '-D_JUDGE_ -DNDEBUG -O2'
+        # return '-D_JUDGE_ -DNDEBUG -O2'
+        return '-std=c++11 -D_JUDGE_ -O2 -DNDEBUG -Wall -Wextra -Wno-sign-compare -Wshadow'
 
     def flags2(self):
-        return '-std=c++11 -D_JUDGE_ -O2 -DNDEBUG -Wall -Wextra -Wno-sign-compare -Wshadow'#return '-D_JUDGE_ -DNDEBUG -O2'
+        # return '-D_JUDGE_ -DNDEBUG -O2'
+        return '-std=c++11 -D_JUDGE_ -O2 -DNDEBUG -Wall -Wextra -Wno-sign-compare -Wshadow'
 
     def extension(self):
         return 'cc'
@@ -265,7 +275,8 @@ class Compiler_GXX (Compiler):
             ext = 'cc.out'
             func = os
 
-        func.system("./%s < %s.inp > %s.%s" % (self.executable(), tst, tst, ext))
+        func.system("./%s < %s.inp > %s.%s" %
+                    (self.executable(), tst, tst, ext))
 
     def compile(self):
         if 'source_modifier' in self.handler and (self.handler['source_modifier'] == 'no_main' or self.handler['source_modifier'] == 'structs'):
@@ -277,7 +288,8 @@ class Compiler_GXX (Compiler):
         # Compile original program
         util.del_file(self.executable())
         try:
-            self.execute_compiler('g++ ' + self.flags1() + ' ' + self.name + '.cc -o ' + self.executable() + ' 2> compilation1.txt')
+            self.execute_compiler('g++ ' + self.flags1() + ' ' + self.name +
+                                  '.cc -o ' + self.executable() + ' 2> compilation1.txt')
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
             util.del_file(self.executable())
@@ -311,7 +323,8 @@ int main() {
         # Compile modified program
         util.del_file(self.executable())
         try:
-            self.execute_compiler('g++ ' + self.flags2() + ' modified.cc -o ' + self.executable() + ' 2> compilation2.txt')
+            self.execute_compiler(
+                'g++ ' + self.flags2() + ' modified.cc -o ' + self.executable() + ' 2> compilation2.txt')
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
             util.del_file(self.executable())
@@ -326,6 +339,8 @@ int main() {
             util.write_file('compilation1.txt', "Unreported error. ")
             util.del_file(self.executable())
             return False
+
+
 class Compiler_P1XX (Compiler_GXX):
 
     compilers.append('P1XX')
@@ -335,6 +350,8 @@ class Compiler_P1XX (Compiler_GXX):
 
     def name(self):
         return 'GNU C++ Compiler with extra flags for beginners'
+
+
 class Compiler_GXX11 (Compiler_GXX):
 
     compilers.append('GXX11')
@@ -347,6 +364,8 @@ class Compiler_GXX11 (Compiler_GXX):
 
     def flags2(self):
         return '-D_JUDGE_ -DNDEBUG -O2 -std=c++11'
+
+
 class Compiler_GXX17 (Compiler_GXX):
 
     compilers.append('GXX17')
@@ -359,6 +378,8 @@ class Compiler_GXX17 (Compiler_GXX):
 
     def flags2(self):
         return '-D_JUDGE_ -DNDEBUG -O2 -std=c++17'
+
+
 class Compiler_GHC (Compiler):
 
     compilers.append('GHC')
@@ -395,7 +416,8 @@ class Compiler_GHC (Compiler):
             ext = 'hs.out'
             func = os
 
-        func.system("./%s < %s.inp > %s.%s" % (self.executable(), tst, tst, ext))
+        func.system("./%s < %s.inp > %s.%s" %
+                    (self.executable(), tst, tst, ext))
 
     def compile(self):
         if 'source_modifier' in self.handler and self.handler['source_modifier'] == 'no_main':
@@ -406,7 +428,8 @@ class Compiler_GHC (Compiler):
     def compile_normal(self):
         util.del_file(self.executable())
         try:
-            self.execute_compiler('ghc ' + self.flags1() + ' ' + self.name + '.hs -o ' + self.executable() + ' 1> /dev/null 2> compilation1.txt')
+            self.execute_compiler('ghc ' + self.flags1() + ' ' + self.name +
+                                  '.hs -o ' + self.executable() + ' 1> /dev/null 2> compilation1.txt')
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
             util.del_file(self.executable())
@@ -429,7 +452,8 @@ class Compiler_GHC (Compiler):
 
         util.del_file(self.executable())
         try:
-            self.execute_compiler('ghc ' + self.flags1() + ' modified.hs -o ' + self.executable() + ' 1> /dev/null 2> compilation1.txt')
+            self.execute_compiler('ghc ' + self.flags1() + ' modified.hs -o ' +
+                                  self.executable() + ' 1> /dev/null 2> compilation1.txt')
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
             util.del_file(self.executable())
@@ -439,6 +463,8 @@ class Compiler_GHC (Compiler):
         util.del_file('modified.hi')
         util.del_file('modified.o')
         return util.file_exists(self.executable())
+
+
 class Compiler_RunHaskell (Compiler):
 
     compilers.append('RunHaskell')
@@ -489,7 +515,8 @@ class Compiler_RunHaskell (Compiler):
         f.close()
 
         try:
-            self.execute_compiler('ghc -O3 work.hs 1> /dev/null 2> compilation1.txt')
+            self.execute_compiler(
+                'ghc -O3 work.hs 1> /dev/null 2> compilation1.txt')
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
             return False
@@ -519,7 +546,8 @@ class Compiler_RunHaskell (Compiler):
                 else:
                     print("    print (%s)" % line, file=f)
             f.close()
-            self.execute_compiler('ghc ' + self.flags1() + ' work.hs -o work.exe 1> /dev/null 2> compilation1.txt')
+            self.execute_compiler(
+                'ghc ' + self.flags1() + ' work.hs -o work.exe 1> /dev/null 2> compilation1.txt')
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
             return False
@@ -530,6 +558,8 @@ class Compiler_RunHaskell (Compiler):
             return True
         else:
             return False
+
+
 class Compiler_RunPython (Compiler):
 
     compilers.append('RunPython')
@@ -589,7 +619,8 @@ py_compile.compile(sys.argv[1])
         util.del_file('compilation1.txt')
         try:
             self.gen_wrapper()
-            self.execute_compiler('python3 py3c.py ' + self.name + '.py 1> /dev/null 2> compilation1.txt')
+            self.execute_compiler(
+                'python3 py3c.py ' + self.name + '.py 1> /dev/null 2> compilation1.txt')
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
             return False
@@ -605,13 +636,16 @@ py_compile.compile(sys.argv[1])
                 os.system("cat judge.py >> work.py")
             os.system("cat %s >> work.py" % extra)
             self.gen_wrapper()
-            self.execute_compiler('python3 py3c.py work.py 1> /dev/null 2> compilation2.txt')
+            self.execute_compiler(
+                'python3 py3c.py work.py 1> /dev/null 2> compilation2.txt')
             return True
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
 
         self.del_wrapper()
         return False
+
+
 class Compiler_JDK (Compiler):
 
     compilers.append('JDK')
@@ -641,8 +675,8 @@ class Compiler_JDK (Compiler):
         return 'java'
 
     def gen_wrapper(self):
-            util.write_file("wrapper.java",
-                            """
+        util.write_file("wrapper.java",
+                        """
 class WrapperMain {
 
     public static void main (String[] args) {
@@ -684,7 +718,8 @@ class WrapperMain {
         try:
             util.copy_file(self.name + '.java', 'Main.java')
             self.gen_wrapper()
-            self.execute_compiler('javac ' + self.flags1() + ' wrapper.java 2> compilation1.txt')
+            self.execute_compiler(
+                'javac ' + self.flags1() + ' wrapper.java 2> compilation1.txt')
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
             return False
@@ -699,17 +734,22 @@ class WrapperMain {
             util.del_file(f)
         try:
             # create Solution.class
-            self.execute_compiler('javac ' + self.flags1() + ' ' + self.name + '.java 2> compilation1.txt')
+            self.execute_compiler(
+                'javac ' + self.flags1() + ' ' + self.name + '.java 2> compilation1.txt')
             # create Main.class
-            self.execute_compiler('javac ' + self.flags1() + ' main.java 2> compilation2.txt')
+            self.execute_compiler(
+                'javac ' + self.flags1() + ' main.java 2> compilation2.txt')
             # create JudgeMain.class
             self.gen_wrapper()
-            self.execute_compiler('javac ' + self.flags1() + ' wrapper.java 2> compilation2.txt')
+            self.execute_compiler(
+                'javac ' + self.flags1() + ' wrapper.java 2> compilation2.txt')
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
             return False
         self.del_wrapper()
         return util.file_exists('Main.class')
+
+
 class Compiler_Python3 (Compiler):
 
     compilers.append('Python3')
@@ -784,12 +824,13 @@ py_compile.compile(sys.argv[1])
         try:
             self.gen_wrapper()
             util.write_file('py3c.py',
-"""#!/usr/bin/python3
+                            """#!/usr/bin/python3
 
 import py_compile, sys
 
 py_compile.compile(sys.argv[1])""")
-            self.execute_compiler('python3 py3c.py ' + self.name + '.py 1> /dev/null 2> compilation1.txt')
+            self.execute_compiler(
+                'python3 py3c.py ' + self.name + '.py 1> /dev/null 2> compilation1.txt')
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
             return False
@@ -797,7 +838,8 @@ py_compile.compile(sys.argv[1])""")
         return util.file_size('compilation1.txt') == 0
 
     def compile_no_main(self):
-        if not self.compile_normal(): return False
+        if not self.compile_normal():
+            return False
 
         # Modify the program
         util.copy_file(self.name + '.py', 'modified.py')
@@ -809,12 +851,15 @@ py_compile.compile(sys.argv[1])""")
         util.del_file('compilation2.txt')
         try:
             self.gen_wrapper()
-            self.execute_compiler('python3 py3c.py modified.py 1> /dev/null 2> compilation2.txt')
+            self.execute_compiler(
+                'python3 py3c.py modified.py 1> /dev/null 2> compilation2.txt')
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
             return False
         self.del_wrapper()
         return util.file_size('compilation2.txt') == 0
+
+
 class Compiler_R (Compiler):
 
     compilers.append('R')
@@ -879,7 +924,8 @@ source("wrapper.R")
 
 checkUsage(wrapper_R)
             """)
-            self.execute_compiler('Rscript compiler.R 1> /dev/null 2> compilation1.txt')
+            self.execute_compiler(
+                'Rscript compiler.R 1> /dev/null 2> compilation1.txt')
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
             return False
@@ -896,7 +942,7 @@ checkUsage(wrapper_R)
         try:
             s = util.read_file("modified.R")
             util.write_file("wrapper.R",
-                        """
+                            """
 wrapper_R <- function() {
 
 %s
@@ -904,14 +950,15 @@ wrapper_R <- function() {
 }
 """ % s)
             util.write_file("compiler.R",
-                        """
+                            """
 library("codetools")
 
 source("wrapper.R")
 
 checkUsage(wrapper_R)
         """ % s)
-            self.execute_compiler('Rscript compiler.R 1> /dev/null 2> compilation1.txt')
+            self.execute_compiler(
+                'Rscript compiler.R 1> /dev/null 2> compilation1.txt')
         except CompilationTooLong:
             util.write_file('compilation1.txt', 'Compilation time exceeded')
             return False
@@ -919,6 +966,8 @@ checkUsage(wrapper_R)
         util.del_file("wrapper.R")
         util.del_file("modified.R")
         return True
+
+
 class Compiler_PRO2 (Compiler):
 
     compilers.append('PRO2')
@@ -955,7 +1004,8 @@ class Compiler_PRO2 (Compiler):
             ext = 'pro2.out'
             func = os
 
-        func.system("./%s < %s.inp > %s.%s" % (self.executable(), tst, tst, ext))
+        func.system("./%s < %s.inp > %s.%s" %
+                    (self.executable(), tst, tst, ext))
 
     def compile(self):
         util.del_file(self.executable())
@@ -964,14 +1014,18 @@ class Compiler_PRO2 (Compiler):
 
         try:
             if util.file_exists(self.name + ".cc"):
-                util.system('cp ' + self.name + '.cc ' + self.name + '.dir/program.cc')
+                util.system('cp ' + self.name + '.cc ' +
+                            self.name + '.dir/program.cc')
             elif util.file_exists(name + ".hh"):
-                util.system('cp ' + self.name + '.hh ' + self.name + '.dir/program.hh')
+                util.system('cp ' + self.name + '.hh ' +
+                            self.name + '.dir/program.hh')
             else:
-                print("There is no " + self.name + ".cc nor " + self.name + ".hh")
+                print("There is no " + self.name +
+                      ".cc nor " + self.name + ".hh")
 
             os.chdir(self.name + ".dir")
-            self.execute_compiler('g++ ' + self.flags1() + ' *.cc -o ../' + self.executable() + ' 2> ../compilation1.txt')
+            self.execute_compiler('g++ ' + self.flags1() + ' *.cc -o ../' +
+                                  self.executable() + ' 2> ../compilation1.txt')
         except CompilationTooLong:
             os.chdir('..')
             util.write_file('compilation1.txt', 'Compilation time exceeded')
@@ -982,7 +1036,10 @@ class Compiler_PRO2 (Compiler):
             util.system("(cd public && tar cf ../public.tar *)")
             util.system("(cd private && tar cf ../private.tar *)")
             return True
-        else: return False
+        else:
+            return False
+
+
 class Compiler_MakePRO2 (Compiler):
 
     compilers.append('MakePRO2')
@@ -1029,10 +1086,12 @@ class Compiler_MakePRO2 (Compiler):
 
         try:
             util.mkdir(self.name + '.dir')
-            util.system('cp solution/*  public/* private/* ' + self.name + '.dir')
+            util.system('cp solution/*  public/* private/* ' +
+                        self.name + '.dir')
             os.chdir(self.name + '.dir')
 
-            self.execute_compiler('make ' + self.name + '.exe 1> make.log 2> ../compilation1.txt')
+            self.execute_compiler('make ' + self.name +
+                                  '.exe 1> make.log 2> ../compilation1.txt')
         except CompilationTooLong:
             util.write_file('../compilation1.txt', 'Compilation time exceeded')
             os.chdir('..')
@@ -1061,9 +1120,11 @@ class Compiler_MakePRO2 (Compiler):
             ext = 'makepro2.out'
             func = os
 
-        func.system("./%s < %s.inp > %s.%s" % (self.executable(), tst, tst, ext))
+        func.system("./%s < %s.inp > %s.%s" %
+                    (self.executable(), tst, tst, ext))
 
 ################################################################################
+
 
 def compiler(cpl, handler=None, name=None):
     '''Returns a compiler for cpl.'''
@@ -1081,10 +1142,17 @@ def compiler_extensions(handler_compiler):
         if x == handler_compiler:
             r[ext] = x
         elif 'Run' not in x and ext not in r:
-            #Python3 has priority over RunPython and GHC has priority over RunHaskell
+            # Python3 has priority over RunPython and GHC has priority over RunHaskell
             r[ext] = x
     return r
 
+def info():
+    '''Returns the info on all the compilers.'''
+
+    r = {}
+    for x in compilers:
+        r[x] = compiler(x).info()
+    return r
 
 if __name__ == '__main__':
     util.print_yml(info())

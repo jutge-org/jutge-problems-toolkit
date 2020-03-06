@@ -1,7 +1,7 @@
 # jutge-problems-toolkit
 ![Logo](logo.png)
 
-This toolkit is a CLI interface that will help you generate all necessary files to prepare problems for [Jutge.org]().
+This toolkit is a CLI interface that will help you generate all necessary files to prepare problems for [Jutge.org](https://jutge.org/).
 
    * [Requirements](#requirements)
    * [Installation](#installation)
@@ -24,7 +24,7 @@ This toolkit is a CLI interface that will help you generate all necessary files 
 
 # Requirements
 
-In order to use the [Jutge.org]() problems toolkit, install first its dependencies: various compilers, Python3, YAML for Python,
+In order to use the [Jutge.org](https://jutge.org/) problems toolkit, install first its dependencies: various compilers, Python3, YAML for Python,
 LaTeX and various packages of LaTeX. If you intend to use other compilers (e.g. Haskell), you must also install them.
 
 
@@ -59,7 +59,7 @@ In case you are using Anaconda, install with `python3 -m pip install jutge-probl
 
 - `--executable`: Makes the executables of the problems.
 - `--corrects `: Generates the solution files of the problems.
-- `--prints`: Creates the printable files in `.pdf` and `.ps` formats.
+- `--prints`: Creates the printable files in `.pdf` format.
 - `--all` : Does everything mentioned above.
 - `--recursive`: The toolkit searches recursively for problems.
 - `--list`: Lists all the problems found recursively.
@@ -90,7 +90,7 @@ A problem is a folder with `.pbm` extension that can be structured in two ways:
 	└── ...
 ```
 
-### Method 2: different test cases or solutions for every human language
+### Method 2: different test cases or solutions for different human languages
 
 ```
 └── problem_folder.pbm
@@ -129,13 +129,12 @@ A problem should contain the following files:
 - `problem.lang.tex`: Statement LaTeX file for language `lang`. See [Problem statement](#problem-statement) for more information.
 - `problem.lang.yml`: Contains the problem information in language `lang`. See [Problem metadata](#problem-metadata) for more information.
 - `problem.lang.pdf`: Formatted PDF statement for language `lang`. These are generated automatically by the toolkit.
-- `problem.lang.ps`: Formatted PS statement for language `lang`. These are generated automatically by the toolkit.
 
 Additionally, the problem can contain the following optional files:
 
-- `award.png`: Image of the award user will obtain when they get the problem accepted for the first time. See [Awards](#awards) for more information.
-- `award.html`: HTML description of the award user will obtain when they get the problem accepted for the first time. See [Awards](#awards) for more information.
-- `code.*`: Code provided in the problem zip file that is given as a solution template (a function with blanks to be filled, for example).
+- `award.png`: Image of the award users will obtain when they get the problem accepted for the first time. See [Awards](#awards) for more information.
+- `award.html`: HTML description of the award users will obtain when they get the problem accepted for the first time. See [Awards](#awards) for more information.
+- `code.*`: Code provided in the problem to users that is given as a solution template (a function with blanks to be filled, for example).
 - `distiller.yml`:  File used to specify the parameters of the distillation process. See [Distilled test cases](#distilled-test-cases) for more information.
 - `scores.yml`: File that describes the scoring of a problem. See [Scoring](#scoring) for more information.
 - `*.ops`: File used to specify some limits for the correction of the problem. See [Test options](#test-options) for more information.
@@ -144,7 +143,7 @@ Additionally, the problem can contain the following optional files:
 
 ## Problem statement
 
-The problem statement is stored using LaTeX in files named `problem.lang.tex`, where `lang` denotes the ISO 639-1 code of the language for which the metadata is given (`ca`,`en`, `es`, ...). Problem statements make use of certain macros defined by [Jutge.org]().
+The problem statement is stored using LaTeX in files named `problem.lang.tex`, where `lang` denotes the ISO 639-1 code of the language for which the metadata is given (`ca`,`en`, `es`, ...). Problem statements make use of certain macros defined by [Jutge.org](https://jutge.org/).
 
 ### Structure
 
@@ -174,9 +173,9 @@ This section describes the output of the problem.
 ```
 
 The `\Sample` section will be automatically replaced to contain the sample test cases. Alternatively, one can use the `\SampleOneCol` or the `\SampleTwoCol` macros to better adjust the column formatting of the the
-sample test cases. RunPython users should use `\SampleSession` to get their sample test cases properly formatted as interactive Python sessions.
+sample test cases. `RunPython` users should use `\SampleSession` to get their sample test cases properly formatted as interactive Python sessions.
 
-The title inside the `\Problem{}` macro should match the title in the metadata given in the `problem.lang.yml` file, but here it can contain math or LaTeX macros.
+The title inside the `\Problem{}` macro should match the title in the metadata given in the `problem.lang.yml` file, but on the LaTeX file it can contain math or LaTeX macros.
 
 
 ### Figures
@@ -284,10 +283,10 @@ The file `handler.yml` contains the information of how to handle the problem usi
 
 There are also optional arguments that may be used:
 
-- `checker`: Option that will tell [Jutge.org]() how to compare the user's program output with the problem solution. See [Checker](#checker) for more information.
-- `compilers`: Compiler that [Jutge.org]() will use to correct the problem. If specified, this will be the only compiler available on the website if an user wants to send his submission. You will find a list of available compilers in https://jutge.org/documentation/compilers.
+- `checker`: Option that will tell [Jutge.org](https://jutge.org/) how to compare the user's program output with the problem solution. See [Checker](#checker) for more information.
+- `compilers`: Compiler that [Jutge.org](https://jutge.org/) will use to correct the problem. If specified, this will be the only compiler available on the website if an user wants to send his submission. You will find a list of available compilers in https://jutge.org/documentation/compilers.
 - `func_name`: Name of the function requested in case the problem only asks for a function (this must be used along with `source_modifier: no_main`)
-- `invisible_main`: If set to `1`, the `main.cc` file will not be provided in the problem zip file. This is used by problems that do not require to write a `main` function.
+- `invisible_main`: If set to `1`, the `main.cc` file will not be provided to users. This is used by problems that do not require to write a `main` function.
 - `presentation_error`: If set to `1 ` (by default), the PE (Presentation Error) verdict will be enabled. Otherwise, the verdict will be WA (Wrong Answer) if the files are not identical.
 - `solution`: Programming language of the solution that will be used to generate the correct output test cases. By default, if a compiler is specified under `compilers` it will use that language. Otherwise, it will use the C++ solution.
 
@@ -323,7 +322,7 @@ With the `checker` option you can specify how the user's program output is compa
 
 ## Tags
 
-A list of problem tags are stored using YAML syntax in the file `tags.yml`. Each tag is a short string that specifies a particular aspect of the problem, such as `backtracking` or `interval tree`. Unfortunately, there is no comprehensive list of problem tags, but you can get a feeling of it at [https://jutge.org/instructor/tags/list]. Problem tags are only visible by instructor users.
+A list of problem tags are stored using YAML syntax in the file `tags.yml`. Each tag is a short string that specifies a particular aspect of the problem, such as `backtracking` or `interval tree`. Unfortunately, there is no comprehensive list of problem tags, but you can see the all the tags that have been used [here](https://jutge.org/instructor/tags/list). Problem tags are only visible by instructor users.
 
 ### Examples
 
@@ -340,7 +339,7 @@ A list of problem tags are stored using YAML syntax in the file `tags.yml`. Each
 
 ## Test cases
 
-Each `test` case is described through two files: `test.inp` and `test.cor`.
+Each test case `test` is described through two files: `test.inp` and `test.cor`.
 
 `test.inp` contains the input of the test case and `test.cor` contains the correct output of the case. In addition, `test` can also make use of a `test.ops` file to describe some options for its correction.
 
@@ -364,11 +363,11 @@ In addition, these rules should be taken into account in the output files:
 
 ### Sample test cases
 
-Sample test cases start with `sample` and will be shown to users in the problem statement and provided in the problem zip file. As such, they should make clear the format of the input and the output for the problem and should be reasonably short.
+Sample test cases start with `sample` and will be shown to users in the problem statement and provided to users. As such, they should make clear the format of the input and the output for the problem and should be reasonably short.
 
 #### Public test cases
 
-Public test cases start with `public` and will be provided in the problem zip file. Usage of public test cases should be rare, but can be useful in situations where long input/output samples must be delivered.
+Public test cases start with `public` and will be provided to users. Usage of public test cases should be rare, but can be useful in situations where long input/output samples must be delivered.
 
 
 #### Hint test cases
@@ -385,11 +384,24 @@ File `distiller.yml` is used to specify the parameters of the distillation proce
 
 ### Test options
 
-The `test.ops` file can be used to specify some limits for the correction of the problem. The options should be written as if they were arguments of a program, with a space between each other. The following options are available:
+The `test.ops` file can be used to specify some limits for the correction of the corresponding test case. The options should be written as if they were arguments of a program, with a space between each other. The following options are available:
 
-- `--maxfiles` or `-f`: set the maximum number of files that can be opened simultaneously.
-- `--maxoutput` or `-o`: Set the maximum size that a file created by the program can have.
-- `--maxtime` or `-t`: Set the maximum execution time that the problem solution can take. Users will have twice the time that the problem solution has (will be improved in the future). If the time is exceeded, the program will not be accepted and the verdict will be "Execution Error" (EE).
+- `--verbose`: Sets the verbose output level. It has three options: `0` (quiet), `1` (normal) and `2` (all the information).
+- `--maxtime`: Sets maximum execution time. It has three values: `cputime`, `limtime` and `clktime`. You can specify only the `cputime`, the `cputime` and the`limtime` or all of them.
+  - `cputime` is the maximum time that the program has to use the CPU (processing instructions).
+  - `limtime` is the maximum CPU time limit. If not specified, `limtime` will be `cputime+1.5`.
+  - `clktime` is the maximum clock time (total time) the program has to run. If not specified, `clktime` will be three times `limtime`.
+- `--maxmem`: Set max memory in MB. It has two values: `maxmem` and `maxstack`. `maxmem` is the maximum amount of memory that the program is allowed to use. `maxstack` is the maximum amount of `maxmem` that can be used for the stack. If the `maxstack` is not specified, it will be the same as `maxmem`.
+- `--maxfiles`: Sets the maximum number of files that can be open simultaneously.
+- `--maxprocs`: Sets the maximum number of processes that the program is allowed to create.
+- `--maxoutput`: Sets the maximum file size in MB of the output generated by the program.
+- `--maxcore`: Sets the maximum file size in MB of the core file (generated if the program crashes).
+- `--basename`: Sets the base name of the input test set.
+- `--stdout`: Set path of the output (`.out`) file. If not specified, the output name will be `basename.out`.
+- `--stdin`: Set path of the input (`.inp`) file. If not specified, the output name will be `basename.inp`.
+- `--stderr`: Set path of the error (`.err`) file. If not specified, the output name will be `basename.err`.
+- `--logfile`: Set path of the `.log` file. If not specified, the output name will be `basename.log`.
+- `--resfile`: Set path of the `.res` file. If not specified, the output name will be `basename.res`.
 
 
 
@@ -401,7 +413,7 @@ For instance, a problem may contain `solution.cc` and `solution.py` in order to 
 
 Independently of the available solutions, users can submit their solutions in any supported programming language. The system will match the programming language of the submission and the programming languages available for the solution and select the most appropriate one.
 
-By default, `problems.py` uses `solution.cc` to generate the correct output test cases. An alternate programming language can be selected using the `solution` field in the `handler.yml` file. Currently, `jutge-problems-toolkit` only uses C++, Java and Python (this should be improved in the future).
+By default, `jutge-problems-toolkit` uses `solution.cc` to generate the correct output test cases. An alternate programming language can be selected using the `solution` field in the `handler.yml` file. Currently, `jutge-problems-toolkit` supports solutions written in C++, Java, Python, Haskell and R.
 
 
 
@@ -448,7 +460,7 @@ The following file gives 10 points to submissions passing all sample test cases,
 
 ## Awards
 
-[Jutge.org]() offers awards to users in specific circumstances. Awards are images with a caption and a short description. In the case that a problem contains an image file `award.png` and (optionally) an HTML file `award.html`, users who get the problem accepted for the first time will receive the award.
+[Jutge.org](https://jutge.org/) offers awards to users in specific circumstances. Awards are images with a caption and a short description. In the case that a problem contains an image file `award.png` and (optionally) an HTML file `award.html`, users who get the problem accepted for the first time will receive the award.
 
 The `award.png` image file should be a 200x200 pixels image in PNG format with a transparent background (preferably). Clip art and colorful images are preferred, no offensive images should be used.
 
@@ -498,7 +510,7 @@ The directory problems is intended to store your problems. As a template, some d
 
 # Credits
 
-- Jordi Petit https://github.com/jordi-petit 
+- Jordi Petit https://github.com/jordi-petit
 - Jordi Reig https://github.com/jordireig
 
 

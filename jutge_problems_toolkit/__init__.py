@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 
 # ----------------------------------------------------------------------------
@@ -14,6 +14,7 @@ import subprocess
 import re
 import subprocess
 from shutil import which
+from colorama import init, Fore, Style
 
 from . import util
 from . import compilers
@@ -49,10 +50,12 @@ def check_dependencies():
             missing_list.append(program)
 
     if missing_list:
-        print('The following dependencies are missing, please install them and try again: ', end='')
+        print(Fore.RED + 'The following dependencies are missing, please install them and try again: ', end='')
         for missing_dep in missing_list:
-            if missing_dep == missing_list[-1]: print(missing_dep)
-            else: print(missing_dep, end=', ')
+            if missing_dep != missing_list[-1]:
+                print(missing_dep, end=', ')
+            else:
+                print(missing_dep + Style.RESET_ALL)
         exit()
 
 
@@ -69,7 +72,8 @@ def make_executable():
 
     global com
     if 'compilers' in handler:
-        com = compilers.compiler(handler.get('compilers', ''), handler, 'solution')
+        com = compilers.compiler(handler.get(
+            'compilers', ''), handler, 'solution')
     elif 'solution' in handler:
         if handler.get('solution', '') == 'Java':
             sol = 'JDK'
@@ -80,7 +84,7 @@ def make_executable():
         else:
             sol = handler.get('solution', '')
         com = compilers.compiler(sol, handler, 'solution')
-    else:   #if handler.get('solution', '') == 'C++' or not specified
+    else:  # if handler.get('solution', '') == 'C++' or not specified
         com = compilers.compiler('GXX', handler, 'solution')
 
     com.compile()
@@ -90,16 +94,18 @@ def make_executable():
 # Make correct files
 # ----------------------------------------------------------------------------
 
+
 def make_corrects():
     """Makes all correct files in the cwd."""
-    print("Generating correct files...")
+    print(Style.BRIGHT + "Generating correct files..." + Style.RESET_ALL)
 
     com = make_executable()
 
     handler = util.read_yml("handler.yml")
 
     if not util.file_exists(com.executable()):
-        raise Exception(com.executable() + " does not exist")
+        raise Exception(Fore.RED + com.executable() +
+                        " does not exist" + Style.RESET_ALL)
     for f in glob.glob("*.cor"):
         util.del_file(f)
     inps = sorted(glob.glob("*.inp"))
@@ -110,6 +116,7 @@ def make_corrects():
 # ----------------------------------------------------------------------------
 # Verify program
 # ----------------------------------------------------------------------------
+
 
 def verify_program(program):
     """Verify that program compiles and gets AC for each test."""
@@ -125,29 +132,32 @@ def verify_program(program):
     supported_list = compilers.compiler_extensions(handler.get('compilers'))
     solution_list = sorted(glob.glob(program + ".*[!exe,dir]"))
 
-    print("Compiling supported programs...")
+    print(Style.BRIGHT + "Compiling supported programs..." + Style.RESET_ALL)
     for solution in solution_list:
         name = os.path.splitext(solution)[0]
         ext = os.path.splitext(solution)[-1][1:]
         if ext in supported_list:
-                com = compilers.compiler(supported_list[ext], handler, name)
-                com.compile()
-                available_list.append([solution, com])
+            com = compilers.compiler(supported_list[ext], handler, name)
+            com.compile()
+            available_list.append([solution, com])
 
     print()
-    unsupported_list = [x for x in solution_list if x not in [y[0] for y in available_list]]
+    unsupported_list = [x for x in solution_list if x not in [
+        y[0] for y in available_list]]
     if unsupported_list != []:
-        print("NOTICE: The following solutions are still not supported and will NOT be verified: ", end='')
+        print(Fore.YELLOW + "NOTICE: The following solutions are still not supported and will NOT be verified: ", end='')
         for elem in unsupported_list:
-            if elem != unsupported_list[-1]: print(elem, end=', ')
-            else: print(elem + '\n')
+            if elem != unsupported_list[-1]:
+                print(elem, end=', ')
+            else:
+                print(elem + '\n' + Style.RESET_ALL)
 
     for f in glob.glob("*.out"):
         util.del_file(f)
     # execute on tests
     has_failed = False
     tests = sorted(glob.glob("*.inp"))
-    for solution, compiler in available_list:
+    for solution, compiler in sorted(available_list, key=lambda tup: tup[0].lower()):
         print("Verifying " + solution + "...")
         ext = os.path.splitext(solution)[-1]
         for test in tests:
@@ -161,17 +171,17 @@ def verify_program(program):
             else:
                 msg = "OK"
                 util.del_file(tst + ext + ".out")
-            print("%s.inp:\t\t%s" % (tst, msg))
+            print((Fore.GREEN if msg == 'OK' else Fore.RED) +
+                  "%s.inp:\t\t%s" % (tst, msg) + Style.RESET_ALL)
         print()
 
     if has_failed:
-        print("Some solutions are not correct! Please check them and try again.")
+        print(Fore.RED + "Some solutions are not correct! Please check them and try again." + Style.RESET_ALL)
         sys.exit(0)
 
 
-
 # ----------------------------------------------------------------------------
-# Make printable files (ps & pdf)
+# Make printable files (pdf)
 # ----------------------------------------------------------------------------
 
 def make_prints_3(lang, ori):
@@ -199,7 +209,8 @@ def make_prints_3(lang, ori):
             num = str(i)
 
         if handler["handler"] == "graphic":
-            size = subprocess.getoutput("identify -format '(%%w$\\\\times$%%h)' %s.cor" % jj)
+            size = subprocess.getoutput(
+                "identify -format '(%%w$\\\\times$%%h)' %s.cor" % jj)
             graphic = "[%s]" % size
             os.system("convert %s.cor %s.cor.eps" % (jj, jj))
 
@@ -235,32 +246,36 @@ handler.yml: \verbatimtabinput{handler.yml}
 
     util.write_file("main.tex", t)
 
-    print("Generating .ps and .pdf files...")
+    print(Style.BRIGHT + "Generating .ps and .pdf files... ", end=Style.RESET_ALL)
     r = os.system("latex -interaction scrollmode main > main.err")
     if r != 0:
         os.system('cat main.err')
-        raise Exception("LaTeX error, please make sure that LaTeX is installed on your computer.")
+        raise Exception(
+            Fore.RED + "\nLaTeX error, please make sure that LaTeX is installed on your computer." + Style.RESET_ALL)
 
     r = os.system("dvips main -o 1> /dev/null 2>/dev/null")
     if r != 0:
-        raise Exception("dvips error")
+        raise Exception(Fore.RED + "\ndvips error!" + Style.RESET_ALL)
 
     r = os.system("ps2pdf main.ps main.pdf 1> /dev/null 2>/dev/null")
     if r != 0:
-        raise Exception("ps2pdf error")
+        raise Exception(Fore.RED + "\nps2pdf error!" + Style.RESET_ALL)
 
-    os.system("mv main.ps  %s/problem.%s.ps " % (ori, lang))
+    os.system("rm main.ps")
     os.system("mv main.pdf %s/problem.%s.pdf" % (ori, lang))
+
+    print(Fore.GREEN + 'Done!' + Style.RESET_ALL)
 
 
 def make_prints2(lang):
-    """Makes the problem*pdf and problem*ps file in the cwd for language lang."""
+    """Makes the problem*pdf file in the cwd for language lang."""
 
     ori = os.getcwd()
     tmp = util.tmp_dir()
-    print(ori, lang, tmp)
+    print(Style.DIM + ori + ' ' + lang + ' ' + tmp + ' ' + Style.RESET_ALL)
 
-    os.system("cp * %s/sty/* %s" % (os.path.dirname(os.path.abspath(__file__)), tmp))
+    os.system("cp * %s/sty/* %s" %
+              (os.path.dirname(os.path.abspath(__file__)), tmp))
     os.chdir(tmp)
 
     try:
@@ -272,7 +287,7 @@ def make_prints2(lang):
 
 
 def make_prints():
-    """Makes the pdf and ps files for the problem in the cwd"""
+    """Makes the pdf files for the problem in the cwd"""
 
     pbms = sorted(glob.glob("problem.*.tex"))
     if pbms:
@@ -287,7 +302,7 @@ def make_prints():
                 make_prints2(d)
                 os.chdir("..")
             else:
-                print("skipping " + d)
+                print(Style.DIM + "skipping " + d + Style.RESET_ALL)
 
 
 # ----------------------------------------------------------------------------
@@ -295,7 +310,7 @@ def make_prints():
 # ----------------------------------------------------------------------------
 
 def make_all():
-    """Makes exe, cors, ps and pdf files for the problem in the cwd."""
+    """Makes exe, cors, pdf files for the problem in the cwd."""
 
     pbms = sorted(glob.glob("problem.*.tex"))
     if pbms:
@@ -312,7 +327,8 @@ def make_all():
         for d in dirs:
             if os.path.isdir(d) and d in languages:
                 os.chdir(d)
-                print("Working on " + os.getcwd() + "...")
+                print(Style.BRIGHT + "Working on " +
+                      os.getcwd() + "..." + Style.RESET_ALL)
                 print()
                 make_corrects()
                 print()
@@ -322,7 +338,7 @@ def make_all():
                 os.chdir("..")
                 print('----------------------------------------\n')
             else:
-                print("skipping " + d)
+                print(Style.DIM + "skipping " + d + Style.RESET_ALL)
 
 
 # ----------------------------------------------------------------------------
@@ -366,11 +382,12 @@ def make_recursive(paths):
             make_recursive_2()
             os.chdir(cwd)
     if errors:
-        print("------------------------------------------")
+        print(Fore.RED + "------------------------------------------")
         print("Errors:")
         print("------------------------------------------")
         for e in errors:
             print(e)
+        print(Style.RESET_ALL, end='')
 
 
 # ----------------------------------------------------------------------------
@@ -378,7 +395,6 @@ def make_recursive(paths):
 # ----------------------------------------------------------------------------
 
 def make_list_2():
-
     cwd = os.getcwd()
     ext = os.path.splitext(cwd)[1]
     if ext == ".pbm":
@@ -407,51 +423,12 @@ def make_list(paths):
             make_list_2()
             os.chdir(cwd)
 
-
-# ----------------------------------------------------------------------------
-# Make a sources list of problems recursively
-# ----------------------------------------------------------------------------
-
-ctr = 0
-
-def make_srclst_2():
-    global ctr
-
-    cwd = os.getcwd()
-    ext = os.path.splitext(cwd)[1]
-    if ext == ".pbm":
-        ctr += 1
-        pbms = glob.glob("problem.*.tex")
-        if pbms:
-            langs = []
-            for p in pbms:
-                langs.append(p.replace("problem.", "").replace(".tex", ""))
-        else:
-            langs = util.intersection(glob.glob("*"), languages)
-        for l in langs:
-            print("P%04d_%s" % (ctr, l), cwd, l)
-    else:
-        for path in sorted(glob.glob("*")):
-            if os.path.isdir(path):
-                os.chdir(path)
-                make_srclst_2()
-                os.chdir(cwd)
-
-
-def make_srclst(paths):
-    cwd = os.getcwd()
-    for path in sorted(paths):
-        if os.path.isdir(path):
-            os.chdir(path)
-            make_srclst_2()
-            os.chdir(cwd)
-
-
 # ----------------------------------------------------------------------------
 # main
 # ----------------------------------------------------------------------------
 
 def main():
+    init()  # Start colorama
     check_dependencies()
 
     # Create and configure the option parser
@@ -472,10 +449,8 @@ def main():
                         action="store_true")
     parser.add_argument("--list", help="list all recursively (cwd if ommitted)",
                         action="store_true")
-    parser.add_argument("--srclst", help="list all recursively for sources (cwd if ommitted)",
-                        action="store_true")
     parser.add_argument("--verify", help="verify correctness of a program",
-                        action='store', dest="verify", type=str, default=None, nargs='?', metavar="PROGRAM")
+                        action='store', dest="verify", type=str, nargs='?', metavar="PROGRAM")
     parser.add_argument("--verbose", help="set verbosity level (0-3) NOT YET IMPLEMENTED",
                         type=int, default=3, metavar="NUMBER")
     parser.add_argument("--stop-on-error", help="stop on first error (for --mk-rec) NOT YET IMPLEMENTED",
@@ -508,15 +483,12 @@ def main():
         if paths == []:
             paths = (".",)
         make_list(paths)
-    if args.srclst:
-        done = True
-        if paths == []:
-            paths = (".",)
-        make_srclst(paths)
     if args.verify:
         done = True
-        if args.verify == None: verify_program("solution")
-        else: verify_program(args.verify)
+        if args.verify == None:
+            verify_program("solution")
+        else:
+            verify_program(args.verify)
     if not done:
         make_all()
 
