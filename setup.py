@@ -5,7 +5,7 @@ import os
 from setuptools import setup
 from glob import glob
 
-version = "1.3.1"
+version = "1.3.2"
 
 
 setup(
@@ -39,7 +39,7 @@ setup(
     include_package_data=True,
     setup_requires=['setuptools'],
     entry_points={'console_scripts': [
-        'make_problems=src:main']}
+        'make-problems=src:main']}
 )
 
 print(os.path.abspath(__file__))
