@@ -43,3 +43,18 @@ setup(
 )
 
 print(os.path.abspath(__file__))
+
+
+# Steps to distribute new version:
+#
+# increment version in the top of this file
+# git commit -a
+# git push
+# git tag 1.1.1 -m "Release 1.1.1"
+# git push --tags origin master
+# python3 setup.py sdist bdist_wheel
+# python3 -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+#
+# More docs:
+# http://peterdowns.com/posts/first-time-with-pypi.html
+# https://medium.com/@joel.barmettler/how-to-upload-your-python-package-to-pypi-65edc5fe9c56
