@@ -55,7 +55,13 @@ In case you are using Anaconda, install with `python3 -m pip install jutge-probl
 
 # Usage
 
-`jutge-problems-toolkit` is a command line utility that currently supports the following arguments:
+The common scenario is to run `make-problem`
+in the command line within a directory containing
+a problem. This will generate the correct outputs for each test case input
+using the defined solution and will also generate the PDF with the
+problem statement.
+
+`make-problem` supports the following arguments:
 
 - `--executable`: Makes the executables of the problems.
 - `--corrects `: Generates the solution files of the problems.
@@ -67,7 +73,6 @@ In case you are using Anaconda, install with `python3 -m pip install jutge-probl
 - `--verify`: Verify the correctness of a program.
 - `--help` or `-h` : Shows a help message with available arguments.
 
-To run the toolkit, just type `jutge-problems-toolkit` in the command line.
 
 
 
