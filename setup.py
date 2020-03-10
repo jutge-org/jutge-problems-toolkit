@@ -5,12 +5,12 @@ import os
 from setuptools import setup
 from glob import glob
 
-version = "1.3.4"
+version = "1.3.5"
 
 
 setup(
     name='jutge-problems-toolkit',
-    packages=['src'],
+    packages=['src', 'sty'],
     install_requires=['pyyaml>=5.1', 'colorama'],
     version=version,
     description='Toolkit to create problems for Jutge.org',

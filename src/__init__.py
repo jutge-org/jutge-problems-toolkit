@@ -274,7 +274,7 @@ def make_prints2(lang):
     tmp = util.tmp_dir()
     print(Style.DIM + ori + ' ' + lang + ' ' + tmp + ' ' + Style.RESET_ALL)
 
-    os.system("cp * %s/sty/* %s" %
+    os.system("cp * %s/../sty/* %s" %
               (os.path.dirname(os.path.abspath(__file__)), tmp))
     os.chdir(tmp)
 

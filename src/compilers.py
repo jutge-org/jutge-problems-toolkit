@@ -10,7 +10,7 @@ import math
 import glob
 import codecs
 
-from jutge_problems_toolkit import util
+from . import util
 
 # Maximum time to compile
 max_compilation_time = 30
