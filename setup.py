@@ -5,7 +5,7 @@ import os
 from setuptools import setup
 from glob import glob
 
-version = "1.3"
+version = "1.3.1"
 
 
 setup(
@@ -39,7 +39,7 @@ setup(
     include_package_data=True,
     setup_requires=['setuptools'],
     entry_points={'console_scripts': [
-        'jutge-problems-toolkit=jutge_problems_toolkit:main']}
+        'make_problems=src:main']}
 )
 
 print(os.path.abspath(__file__))
