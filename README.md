@@ -1,4 +1,5 @@
-# jutge-problems-toolkit
+# Toolkit to prepare problems for Jutge.org
+
 ![Logo](logo.png)
 
 This toolkit is a CLI interface that will help you generate all necessary files to prepare problems for [Jutge.org](https://jutge.org/).
