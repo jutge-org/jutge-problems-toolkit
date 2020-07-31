@@ -1,3 +1,5 @@
+> THIS REPOSITORY IS DEPRECATED. PLEASE USE https://github.com/jutge-org/jutge-problems-toolkit INSTEAD.
+
 # Toolkit to prepare problems for Jutge.org
 
 ![Logo](logo.png)
