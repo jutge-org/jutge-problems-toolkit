@@ -1,4 +1,4 @@
-> THIS REPOSITORY IS DEPRECATED. PLEASE USE https://github.com/jutge-org/jutge-problems-toolkit INSTEAD.
+> THIS REPOSITORY IS DEPRECATED. PLEASE USE https://github.com/jutge-org/jutge-toolkit INSTEAD.
 
 # Toolkit to prepare problems for Jutge.org
 
